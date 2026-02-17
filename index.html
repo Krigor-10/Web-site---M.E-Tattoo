@@ -135,12 +135,31 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
     <script>
-        Fancybox.bind("[data-fancybox]", {
-            Toolbar: {
-                display: ["zoom", "slideshow", "close"],
-            },
+        document.addEventListener("DOMContentLoaded", function() {
+            try {
+                Fancybox.bind("[data-fancybox]", {
+                    // Animações suaves
+                    animated: true,
+                    // Mostra as setas de navegação
+                    groupAll: true,
+                    // Oculta a barra de ferramentas se der erro
+                    Toolbar: {
+                        display: ["zoom", "slideshow", "close"],
+                    },
+                    // Importante: Previne erros se a imagem falhar
+                    on: {
+                        error: (fancybox, slide) => {
+                            console.error("Erro ao carregar imagem:", slide.src);
+                            alert("Não foi possível carregar a imagem. Verifique o nome do arquivo no GitHub.");
+                        }
+                    }
+                });
+                console.log("Fancybox iniciado com sucesso!");
+            } catch (error) {
+                console.error("Erro no Fancybox:", error);
+            }
         });
     </script>
-
 </body>
 </html>
+
